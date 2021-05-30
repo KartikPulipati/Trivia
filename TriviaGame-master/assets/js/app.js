@@ -1,3 +1,13 @@
+var alanBtnInstance = alanBtn({
+    key: "85738645b01afe1f68cf0965b331a4f42e956eca572e1d8b807a3e2338fdd0dc/stage",
+    onCommand: function(commandData) {
+        if (commandData.command === "go:back") {
+            //call client code that will react on the received command
+        }
+    },
+    rootEl: document.getElementById("alan-btn"),
+});
+
 $(document).ready(function() {
 
     // event listeners
@@ -88,6 +98,7 @@ var trivia = {
         // gets all the questions then indexes the current questions
         var questionContent = Object.values(trivia.questions)[trivia.currentSet];
         $('#question').text(questionContent);
+        alanBtnInstance.playText(questionContent);
 
         // an array of all the user options for the current question
         var questionOptions = Object.values(trivia.options)[trivia.currentSet];
