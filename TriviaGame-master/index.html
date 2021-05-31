@@ -31,9 +31,7 @@
 
 <body>
 
-    <audio controls loop>
-      <source src="./assets/images/tumblr_lq9mbjMc3g1qas0n5o1.mp3" type="audio/mp3"/>
-    </audio>
+    
 
     <div class="container">
         <div class="header text-center clearfix">
@@ -72,6 +70,34 @@
         <script src="./assets/js/app.js"></script>
         <!-- Alan AI JS -->
         <script type="text/javascript" src="https://studio.alan.app/web/lib/alan_lib.min.js"></script>
+        <script>
+	    var alanBtnInstance = alanBtn({
+		key: "85738645b01afe1f68cf0965b331a4f42e956eca572e1d8b807a3e2338fdd0dc/stage",
+		onCommand: function (commandData) {
+			if (commandData.command === "gameStart") {
+                if(trivia.gameStarted){
+                    alanBtnInstance.playText("You are already started!");
+            }else{
+                document.getElementById("start").click();
+                
+            }
+			}
+		},
+		rootEl: document.getElementById("alan-btn"),
+	});
+
+    if(trivia.gameStarted) {
+        alert("void")
+    }else{
+        // alanBtnInstance.activate();
+        // alanBtnInstance.playText("Hi I am Alan, your host, say or click start, when ready to play trivia.");
+    }
+   
+    
+    
+       
+   
+</script>
         
 
 

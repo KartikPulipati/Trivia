@@ -1,13 +1,3 @@
-var alanBtnInstance = alanBtn({
-    key: "85738645b01afe1f68cf0965b331a4f42e956eca572e1d8b807a3e2338fdd0dc/stage",
-    onCommand: function(commandData) {
-        if (commandData.command === "go:back") {
-            //call client code that will react on the received command
-        }
-    },
-    rootEl: document.getElementById("alan-btn"),
-});
-
 $(document).ready(function() {
 
     // event listeners
@@ -17,7 +7,9 @@ $(document).ready(function() {
 
 })
 
+
 var trivia = {
+    gameStarted: false,
     // trivia properties
     correct: 0,
     incorrect: 0,
@@ -26,6 +18,7 @@ var trivia = {
     timer: 20,
     timerOn: false,
     timerId: '',
+
     // questions options and answers data
     questions: {
         q1: 'What color is an orange?',
@@ -36,6 +29,7 @@ var trivia = {
         q6: 'When is Christmas?',
         q7: "Which is the most populous county in California?"
     },
+
     options: {
         q1: ['Orange', 'Red', 'Green', 'Blue'],
         q2: ['BTS', 'The Beatles', 'Kanye West', 'Rick Astley'],
@@ -45,6 +39,7 @@ var trivia = {
         q6: ['Jan. 1', 'Dec. 25', 'Oct. 31', 'Feb. 14'],
         q7: ['San Francisco', 'Los Angeles', 'San Diego', 'Alameda']
     },
+
     answers: {
         q1: 'Orange',
         q2: 'Rick Astley',
@@ -54,9 +49,11 @@ var trivia = {
         q6: 'Dec. 25',
         q7: 'Los Angeles'
     },
+
     // trivia methods
     // method to initialize game
     startGame: function() {
+        trivia.gameStarted = true;
         // restarting game results
         trivia.currentSet = 0;
         trivia.correct = 0;
@@ -98,7 +95,7 @@ var trivia = {
         // gets all the questions then indexes the current questions
         var questionContent = Object.values(trivia.questions)[trivia.currentSet];
         $('#question').text(questionContent);
-        alanBtnInstance.playText(questionContent);
+
 
         // an array of all the user options for the current question
         var questionOptions = Object.values(trivia.options)[trivia.currentSet];
@@ -119,6 +116,7 @@ var trivia = {
                 $('#timer').addClass('last-seconds');
             }
         }
+
         // the time has run out and increment unanswered, run result
         else if (trivia.timer === -1) {
             trivia.unanswered++;
@@ -127,9 +125,10 @@ var trivia = {
             resultId = setTimeout(trivia.guessResult, 1000);
             $('#results').html('<h3>Out of time! The answer was ' + Object.values(trivia.answers)[trivia.currentSet] + '</h3>');
         }
+
         // if all the questions have been shown end the game, show results
         else if (trivia.currentSet === Object.keys(trivia.questions).length) {
-
+            trivia.gameStarted = false;
             // adds results of game (correct, incorrect, unanswered) to the page
             $('#results')
                 .html('<h3>Thank you for playing!</h3>' +
@@ -165,6 +164,7 @@ var trivia = {
             resultId = setTimeout(trivia.guessResult, 1000);
             $('#results').html('<h3>Correct Answer!</h3>');
         }
+
         // else the user picked the wrong option, increment incorrect
         else {
             // turn button clicked red for incorrect
@@ -177,6 +177,7 @@ var trivia = {
         }
 
     },
+
     // method to remove previous question results and options
     guessResult: function() {
 
